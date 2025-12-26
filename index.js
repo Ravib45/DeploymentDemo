@@ -34,6 +34,22 @@ app.post("/contact", async (req, res) => {
         res.status(500).json({ msg: "Error saving data ❌" });
     }
 });
+// GET all contacts (Admin)
+app.get("/contacts", async (req, res) => {
+    try {
+        const contacts = await Contact.find().sort({ createdAt: -1 });
+
+        res.json({
+            success: true,
+            data: contacts
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            msg: "Failed to fetch contacts"
+        });
+    }
+});
 
 // port for Render
 const PORT = process.env.PORT || 5000;
